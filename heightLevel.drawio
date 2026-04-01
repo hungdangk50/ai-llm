@@ -1,0 +1,69 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36 Edg/146.0.0.0">
+  <diagram name="AI Gateway Hybrid Architecture" id="0">
+    <mxGraphModel dx="1418" dy="780" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="JAKNKhY_zqrYi0nuwOwq-29" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;" value="(1) Client&#xa;Web/Mobile" vertex="1">
+          <mxGeometry height="60" width="140" x="110.00470588235294" y="570.0035294117646" as="geometry" />
+        </mxCell>
+        <mxCell id="JAKNKhY_zqrYi0nuwOwq-30" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;" value="(2) AIOrchestration&lt;div&gt;- Node Js&lt;br&gt;- JWT decode&lt;br&gt;- Tool filter&lt;br&gt;- AI Loop&lt;div&gt;- Choose Model LLM&lt;br&gt;- Bedrock Client&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="240" x="370.00470588235294" y="530.0035294117646" as="geometry" />
+        </mxCell>
+        <mxCell id="JAKNKhY_zqrYi0nuwOwq-31" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;" value="(3) Bedrock LLM" vertex="1">
+          <mxGeometry height="100" width="180" x="770.0047058823529" y="540.0035294117646" as="geometry" />
+        </mxCell>
+        <mxCell id="JAKNKhY_zqrYi0nuwOwq-32" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;" value="(5) AIGate&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;-&amp;nbsp; Java Reactive Gateway (Spring Cloud Gateway)&lt;/span&gt;&lt;div&gt;- JWT validate&lt;br&gt;- RBAC&lt;br&gt;- Transform request/response (LLM ↔ Core) trước khi route Core API&lt;br&gt;- Redis cache (tool/registry, Core read-through)&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="240" x="370.00470588235294" y="720.0035294117646" as="geometry" />
+        </mxCell>
+        <mxCell id="JAKNKhY_zqrYi0nuwOwq-33" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;" value="(6) API Core Services" vertex="1">
+          <mxGeometry height="100" width="240" x="180.00470588235294" y="1120.0035294117647" as="geometry" />
+        </mxCell>
+        <mxCell id="JAKNKhY_zqrYi0nuwOwq-34" parent="1" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#ffe6cc;" value="Tool Registry DB" vertex="1">
+          <mxGeometry height="100" width="180" x="800.0047058823529" y="740.0035294117646" as="geometry" />
+        </mxCell>
+        <mxCell id="JAKNKhY_zqrYi0nuwOwq-35" parent="1" style="shape=cylinder;whiteSpace=wrap;html=1;fillColor=#f5f5f5;" value="Redis&#xa;(cache tại Java)" vertex="1">
+          <mxGeometry height="80" width="140" x="120.00470588235295" y="897.0035294117646" as="geometry" />
+        </mxCell>
+        <mxCell id="JAKNKhY_zqrYi0nuwOwq-36" edge="1" parent="1" source="JAKNKhY_zqrYi0nuwOwq-29" style="endArrow=block;" target="JAKNKhY_zqrYi0nuwOwq-30" value="1. Prompt + JWT">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JAKNKhY_zqrYi0nuwOwq-37" edge="1" parent="1" source="JAKNKhY_zqrYi0nuwOwq-30" style="endArrow=block;" target="JAKNKhY_zqrYi0nuwOwq-31" value="2. Prompt + Tools">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JAKNKhY_zqrYi0nuwOwq-38" edge="1" parent="1" source="JAKNKhY_zqrYi0nuwOwq-31" style="endArrow=block;" target="JAKNKhY_zqrYi0nuwOwq-30" value="3. Tool Call / Answer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JAKNKhY_zqrYi0nuwOwq-39" edge="1" parent="1" source="JAKNKhY_zqrYi0nuwOwq-30" style="endArrow=block;strokeColor=#ff0000;" target="JAKNKhY_zqrYi0nuwOwq-32" value="4. Execute Tool">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JAKNKhY_zqrYi0nuwOwq-42" edge="1" parent="1" source="JAKNKhY_zqrYi0nuwOwq-32" style="endArrow=block;strokeColor=#ff0000;" target="JAKNKhY_zqrYi0nuwOwq-30" value="7. Tool Result">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JAKNKhY_zqrYi0nuwOwq-43" edge="1" parent="1" source="JAKNKhY_zqrYi0nuwOwq-30" style="endArrow=block;" target="JAKNKhY_zqrYi0nuwOwq-29" value="8. Final Answer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JAKNKhY_zqrYi0nuwOwq-44" edge="1" parent="1" source="JAKNKhY_zqrYi0nuwOwq-32" style="endArrow=block;" target="JAKNKhY_zqrYi0nuwOwq-34" value="Load Tools">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JAKNKhY_zqrYi0nuwOwq-46" edge="1" parent="1" source="JAKNKhY_zqrYi0nuwOwq-32" style="dashed=1;endArrow=block;html=1;exitX=0.033;exitY=1.017;exitDx=0;exitDy=0;exitPerimeter=0;" target="JAKNKhY_zqrYi0nuwOwq-35" value="Read/Write cache">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VgHefVSeX2mXXIqssMpi-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;" value="(7) MCP Server" vertex="1">
+          <mxGeometry height="100" width="240" x="580" y="1120" as="geometry" />
+        </mxCell>
+        <mxCell id="VgHefVSeX2mXXIqssMpi-5" edge="1" parent="1" source="VgHefVSeX2mXXIqssMpi-1" style="endArrow=classic;startArrow=classic;html=1;rounded=0;entryX=0.85;entryY=1;entryDx=0;entryDy=0;" target="JAKNKhY_zqrYi0nuwOwq-32" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VgHefVSeX2mXXIqssMpi-8" connectable="0" parent="VgHefVSeX2mXXIqssMpi-5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Forward MCP tool invocation (HTTPS)" vertex="1">
+          <mxGeometry relative="1" x="-0.0979" y="3" as="geometry">
+            <mxPoint x="7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VgHefVSeX2mXXIqssMpi-6" edge="1" parent="1" source="JAKNKhY_zqrYi0nuwOwq-32" style="startArrow=block;endArrow=block;html=1;rounded=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="JAKNKhY_zqrYi0nuwOwq-33" value="HTTPS REST (2 chiều): request ↔ response">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

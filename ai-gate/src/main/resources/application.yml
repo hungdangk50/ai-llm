@@ -1,0 +1,31 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: ai-gate
+  codec:
+    max-in-memory-size: 1MB
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      # Route bổ sung có thể thêm sau (proxy tới Core, MCP, …). Handler nội bộ: ToolExecuteHandler.
+      default-filters:
+        - name: Retry
+          args:
+            retries: 0
+      routes: []
+
+jwt:
+  # HS256: tối thiểu 32 byte (256 bit) — đồng bộ với ai-orchestration JWT_SECRET
+  secret: ${JWT_SECRET:dev-secret-key-for-hs256-must-be-32bytes}
+
+core:
+  base-url: ${CORE_BASE_URL:}
+  timeout-ms: 10000
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
+    com.example.tooltool: INFO
