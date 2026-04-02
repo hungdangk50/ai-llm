@@ -32,7 +32,9 @@ app.listen(config.port, () => {
     {
       service: "AIOrchestration",
       port: config.port,
+      aiProvider: config.aiProvider,
       mockBedrock: config.mockBedrock,
+      mockCaip: config.mockCaip,
       aiGateUrl: config.aiGateUrl,
     },
     "AIOrchestration listening"

@@ -1,4 +1,4 @@
-import { config } from "../config.js";
+import { config, type AiProviderKind } from "../config.js";
 
 /**
  * Chọn Bedrock modelId theo policy đơn giản (mở rộng theo `LLM-model-routing.md`).
@@ -16,4 +16,26 @@ export function selectBedrockModelId(prompt: string, _userRoles: string[]): stri
     return largeModel;
   }
   return config.bedrockModelId;
+}
+
+function wantsLargeModel(prompt: string): boolean {
+  const longPrompt = prompt.length > 8000;
+  const codeLike = /```|def\s|function\s|class\s|SELECT\s|INSERT\s/i.test(prompt);
+  return longPrompt || codeLike;
+}
+
+/** Chọn model/deployment id theo provider (Bedrock hoặc CAIP). */
+export function selectLlmModelId(
+  prompt: string,
+  userRoles: string[],
+  provider: AiProviderKind
+): string {
+  if (provider === "caip") {
+    const largeModel = process.env.CAIP_MODEL_ID_LARGE?.trim();
+    if (largeModel && wantsLargeModel(prompt)) {
+      return largeModel;
+    }
+    return config.caipModelId;
+  }
+  return selectBedrockModelId(prompt, userRoles);
 }

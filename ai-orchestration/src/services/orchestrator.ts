@@ -1,23 +1,20 @@
 import { config } from "../config.js";
-import type { BedrockTurnResult } from "../types.js";
-import { mockBedrockTurn } from "./bedrockMock.js";
-import { realBedrockTurn } from "./bedrockConverse.js";
+import type { AiTurnResult } from "../types.js";
 import { callAIGateExecute } from "./aiGateClient.js";
 import type { ConversationMessage } from "./conversation.js";
 import { userTextMessage } from "./conversation.js";
 import type { ToolDefinition } from "../types.js";
 import { logger } from "../logger.js";
-import { selectBedrockModelId } from "./modelRouter.js";
+import { selectLlmModelId } from "./modelRouter.js";
+import { getLlmProvider } from "./ai/createLlmProvider.js";
 
 async function runTurn(
   messages: ConversationMessage[],
   tools: ToolDefinition[],
-  bedrockModelId: string
-): Promise<BedrockTurnResult> {
-  if (config.mockBedrock) {
-    return mockBedrockTurn(messages, tools);
-  }
-  return realBedrockTurn(messages, tools, bedrockModelId);
+  modelId: string
+): Promise<AiTurnResult> {
+  const provider = getLlmProvider();
+  return provider.completeTurn(messages, tools, modelId);
 }
 
 export async function runChatOrchestration(
@@ -26,7 +23,7 @@ export async function runChatOrchestration(
   tools: ToolDefinition[],
   userRoles: string[]
 ): Promise<{ answer: string; bedrockModelId: string }> {
-  const bedrockModelId = selectBedrockModelId(prompt, userRoles);
+  const bedrockModelId = selectLlmModelId(prompt, userRoles, config.aiProvider);
   const messages: ConversationMessage[] = [userTextMessage(prompt)];
   let loops = 0;
 

@@ -5,7 +5,7 @@ import {
   type Message,
 } from "@aws-sdk/client-bedrock-runtime";
 import { config } from "../config.js";
-import type { BedrockTurnResult, ToolDefinition } from "../types.js";
+import type { AiTurnResult, ToolDefinition } from "../types.js";
 import type { ConversationMessage } from "./conversation.js";
 
 const client = new BedrockRuntimeClient({ region: config.awsRegion });
@@ -54,7 +54,7 @@ function toBedrockMessages(messages: ConversationMessage[]): Message[] {
   return out;
 }
 
-function parseTurn(outputMessage: Message | undefined): BedrockTurnResult {
+function parseTurn(outputMessage: Message | undefined): AiTurnResult {
   if (!outputMessage?.content?.length) {
     return { kind: "final", text: "" };
   }
@@ -87,7 +87,7 @@ export async function realBedrockTurn(
   messages: ConversationMessage[],
   tools: ToolDefinition[],
   modelId: string
-): Promise<BedrockTurnResult> {
+): Promise<AiTurnResult> {
   const bedrockMessages = toBedrockMessages(messages);
   const cmd = new ConverseCommand({
     modelId,

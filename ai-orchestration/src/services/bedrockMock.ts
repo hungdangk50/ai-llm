@@ -1,4 +1,4 @@
-import type { BedrockTurnResult, ToolDefinition } from "../types.js";
+import type { AiTurnResult, ToolDefinition } from "../types.js";
 import type { ConversationMessage } from "./conversation.js";
 
 /**
@@ -7,7 +7,7 @@ import type { ConversationMessage } from "./conversation.js";
 export async function mockBedrockTurn(
   messages: ConversationMessage[],
   tools: ToolDefinition[]
-): Promise<BedrockTurnResult> {
+): Promise<AiTurnResult> {
   const toolNames = new Set(tools.map((t) => t.name));
   const hasToolResult = messages.some(
     (m) =>

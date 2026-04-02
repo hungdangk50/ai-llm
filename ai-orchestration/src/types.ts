@@ -11,6 +11,10 @@ export type ToolCall = {
   arguments: Record<string, unknown>;
 };
 
-export type BedrockTurnResult =
+/** Kết quả một lượt gọi LLM (dùng chung cho mọi provider: Bedrock, CAIP, …). */
+export type AiTurnResult =
   | { kind: "final"; text: string }
   | { kind: "tool_use"; toolCall: ToolCall; toolUseId: string };
+
+/** @deprecated Dùng {@link AiTurnResult} — giữ alias cho code cũ. */
+export type BedrockTurnResult = AiTurnResult;
